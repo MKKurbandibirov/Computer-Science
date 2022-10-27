@@ -21,8 +21,12 @@ func (a *Array[T]) String() string {
 	return builder.String()
 }
 
-func (a *Array[T]) AddElem(elem T) {
-	a.arr = append(a.arr, elem)
+func (a *Array[T]) Size() int {
+	return len(a.arr)
+}
+
+func (a *Array[T]) Capacity() int {
+	return cap(a.arr)
 }
 
 func (a *Array[T]) AddElems(elems ...T) {
@@ -31,10 +35,31 @@ func (a *Array[T]) AddElems(elems ...T) {
 	}
 }
 
-func (a *Array[T]) At(ind int) (T, error) {
+func (a *Array[T]) At(pos int) (T, error) {
 	var zero T
-	if ind < 0 || ind > len(a.arr) {
+	if pos < 0 || pos > len(a.arr) {
 		return zero, errors.New("index out of bound")
 	}
-	return a.arr[ind], nil
+	return a.arr[pos], nil
+}
+
+func (a *Array[T]) InsertElems(pos int, elems ...T) error {
+	if pos < 0 || pos > len(a.arr) {
+		return errors.New("index out of bound")
+	}
+	prev := make([]T, pos+len(elems))
+	copy(prev, a.arr[:pos])
+	for i, elem := range elems {
+		prev[i+pos] = elem
+	}
+	a.arr = append(prev, a.arr[pos:]...)
+	return nil
+}
+
+func (a *Array[T]) DeleteElems(pos int, count int) error {
+	if pos < 0 || pos > len(a.arr) {
+		return errors.New("index out of bound")
+	}
+	a.arr = append(a.arr[:pos], a.arr[pos+count:]...)
+	return nil
 }
