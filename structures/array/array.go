@@ -60,6 +60,9 @@ func (a *Array[T]) DeleteElems(pos int, count int) error {
 	if pos < 0 || pos > len(a.arr) {
 		return errors.New("index out of bound")
 	}
+	if count < 0 || count > len(a.arr[pos:]) {
+		return errors.New("invalid count value")
+	}
 	a.arr = append(a.arr[:pos], a.arr[pos+count:]...)
 	return nil
 }
