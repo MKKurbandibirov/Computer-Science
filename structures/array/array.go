@@ -29,6 +29,10 @@ func (a *Array[T]) Capacity() int {
 	return cap(a.arr)
 }
 
+func (a *Array[T]) IsEmpty() bool {
+	return a.Size() == 0
+}
+
 func (a *Array[T]) AddElems(elems ...T) {
 	for _, elem := range elems {
 		a.arr = append(a.arr, elem)
