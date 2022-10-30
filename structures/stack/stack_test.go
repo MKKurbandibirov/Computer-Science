@@ -56,7 +56,7 @@ func TestStack_PushBack(t *testing.T) {
 			}
 			s.PushBack(tt.args.elem)
 			if !reflect.DeepEqual(s.arr, want.arr) {
-				t.Errorf("At() got = %v, want %v", s.arr, want.arr)
+				t.Errorf("PushBack() got = %v, want %v", s.arr, want.arr)
 			}
 		})
 	}
@@ -103,7 +103,7 @@ func TestStack_Pop(t *testing.T) {
 				arr: tt.want.elems,
 			}
 			if !reflect.DeepEqual(s.arr, want.arr) {
-				t.Errorf("At() got = %v, want %v", s.arr, want.arr)
+				t.Errorf("Pop() got = %v, want %v", s.arr, want.arr)
 			}
 		})
 	}

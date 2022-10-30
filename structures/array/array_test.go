@@ -68,7 +68,7 @@ func TestArray_AddElems(t *testing.T) {
 			}
 			a.AddElems(tt.args.elems...)
 			if !reflect.DeepEqual(a.arr, want.arr) {
-				t.Errorf("At() got = %v, want %v", a.arr, want.arr)
+				t.Errorf("AddElems() got = %v, want %v", a.arr, want.arr)
 			}
 		})
 	}
@@ -469,7 +469,7 @@ func TestArray_InsertElems(t *testing.T) {
 				arr: tt.want.elems,
 			}
 			if !reflect.DeepEqual(a, want) {
-				t.Errorf("At() got = %v, want %v", a, want)
+				t.Errorf("InsertElems() got = %v, want %v", a, want)
 			}
 		})
 	}
@@ -646,7 +646,7 @@ func TestArray_DeleteElems(t *testing.T) {
 				arr: tt.want.elems,
 			}
 			if !reflect.DeepEqual(a, want) {
-				t.Errorf("At() got = %v, want %v", a, want)
+				t.Errorf("DeleteElems() got = %v, want %v", a, want)
 			}
 		})
 	}
