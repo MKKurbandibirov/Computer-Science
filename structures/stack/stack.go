@@ -10,6 +10,17 @@ type Stack[T any] struct {
 	arr []T
 }
 
+func (s *Stack[T]) Iter() <-chan T {
+	iter := make(chan T)
+	go func() {
+		for i := 0; i < s.Size(); i++ {
+			iter <- s.arr[i]
+		}
+		close(iter)
+	}()
+	return iter
+}
+
 func (s *Stack[T]) String() string {
 	var builder strings.Builder
 	var offset int

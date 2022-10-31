@@ -10,6 +10,17 @@ type Dequeue[T any] struct {
 	arr []T
 }
 
+func (d *Dequeue[T]) Iter() <-chan T {
+	iter := make(chan T)
+	go func() {
+		for i := 0; i < d.Size(); i++ {
+			iter <- d.arr[i]
+		}
+		close(iter)
+	}()
+	return iter
+}
+
 func (d *Dequeue[T]) String() string {
 	var builder strings.Builder
 	builder.WriteString("< ")

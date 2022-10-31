@@ -10,6 +10,17 @@ type Array[T any] struct {
 	arr []T
 }
 
+func (a *Array[T]) Iter() <-chan T {
+	iter := make(chan T)
+	go func() {
+		for i := 0; i < a.Size(); i++ {
+			iter <- a.arr[i]
+		}
+		close(iter)
+	}()
+	return iter
+}
+
 func (a *Array[T]) String() string {
 	var builder strings.Builder
 	builder.WriteString("[")
