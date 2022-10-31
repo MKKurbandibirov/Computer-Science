@@ -32,6 +32,9 @@ func (l *List[T]) Iter() <-chan T {
 }
 
 func (l *List[T]) String() string {
+	if l.Size() == 0 {
+		return ""
+	}
 	var builder strings.Builder
 	curr := l.First
 	builder.WriteString("|")
@@ -142,6 +145,16 @@ func (l *List[T]) DeleteElem(ind int) error {
 	}
 	if ind > l.Size() || ind < 0 {
 		return errors.New("index is out of bound")
+	}
+	if ind == 0 {
+		l.First = l.First.Next
+		l.First.Prev = nil
+		return nil
+	}
+	if ind == l.Size()-1 {
+		l.Last = l.Last.Prev
+		l.Last.Next = nil
+		return nil
 	}
 	curr := l.First
 	for i := 0; i < ind; i++ {
