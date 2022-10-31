@@ -126,6 +126,9 @@ func (l *List[T]) At(ind int) (T, error) {
 	if ind > l.Size() || ind < 0 {
 		return zero, errors.New("index is out of bound")
 	}
+	if ind == l.Size()-1 {
+		return l.Last.Value, nil
+	}
 	curr := l.First
 	for i := 0; i < ind; i++ {
 		curr = curr.Next
