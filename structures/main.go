@@ -21,5 +21,9 @@ func main() {
 	l.DeleteElem(1)
 	fmt.Println(l.String())
 
+	l.Insert(1, 37)
+	l.Insert(2, 37)
+	fmt.Println(l.String())
+
 	fmt.Println(l.At(2))
 }

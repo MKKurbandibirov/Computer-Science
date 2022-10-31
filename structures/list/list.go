@@ -90,6 +90,34 @@ func (l *List[T]) AddBack(elem T) {
 	l.length++
 }
 
+func (l *List[T]) Insert(ind int, elem T) error {
+	if ind > l.Size() || ind < 0 {
+		return errors.New("index is out of bound")
+	}
+	if l.Size() == 0 && ind == 0 {
+		Node := new(node[T])
+		Node.Value = elem
+		Node.Prev = nil
+		Node.Next = nil
+		l.First = Node
+		l.Last = Node
+	} else {
+		Node := new(node[T])
+		Node.Value = elem
+		curr := l.First
+		for i := 0; i < ind; i++ {
+			curr = curr.Next
+		}
+		prev := curr.Prev
+		prev.Next = Node
+		Node.Prev = prev
+		curr.Prev = Node
+		Node.Next = curr
+	}
+	l.length++
+	return nil
+}
+
 func (l *List[T]) At(ind int) (T, error) {
 	var zero T
 	if l.IsEmpty() {
