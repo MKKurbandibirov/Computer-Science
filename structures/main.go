@@ -17,7 +17,9 @@ func main() {
 		return a < b
 	})
 
-	for x := range tr.Iter() {
-		fmt.Printf("%v ", x)
-	}
+	fmt.Print(tr.String())
+
+	//for x := range tr.Iter() {
+	//	fmt.Printf("%v ", x)
+	//}
 }
