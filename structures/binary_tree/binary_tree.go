@@ -2,7 +2,7 @@ package binary_tree
 
 import (
 	"fmt"
-	"math"
+	"strings"
 )
 
 type node[T any] struct {
@@ -21,48 +21,27 @@ func NewNode[T any](elem T) *node[T] {
 	}
 }
 
-func getSpaceCount(height int) int {
-	return int(3*math.Pow(2, float64(height-2)) - 1)
-}
-
-func getSlashCount(height int) int {
-	if height <= 3 {
-		return height - 1
+func nodePrint[T any](prefix string, n *node[T], isLeft bool, sb *strings.Builder) {
+	if n != nil {
+		sb.WriteString(prefix + func() string {
+			if isLeft {
+				return fmt.Sprintf("|--%v\n", n.Value)
+			}
+			return fmt.Sprintf("\\--%v\n", n.Value)
+		}())
+		nodePrint(prefix+func() string {
+			if isLeft {
+				return "|   "
+			}
+			return "    "
+		}(), n.Left, true, sb)
+		nodePrint(prefix+func() string {
+			if isLeft {
+				return "|   "
+			}
+			return "    "
+		}(), n.Right, false, sb)
 	}
-	return int(3*math.Pow(2, float64(height-3)) - 1)
-}
-
-func getHeight[T any](root *node[T]) int {
-	if root == nil {
-		return 0
-	}
-	return int(math.Max(float64(getHeight(root.Left)), float64(getHeight(root.Right))))
-}
-
-func nodePrint[T any](prefix string, n *node[T], isLeft bool) string {
-	if n == nil {
-		return ""
-	}
-	//fmt.Println(prefix)
-	prefix = prefix + func() string {
-		if isLeft {
-			return fmt.Sprintf("|--%v\n", n.Value)
-		}
-		return fmt.Sprintf("\\--%v\n", n.Value)
-	}()
-	nodePrint(func() string {
-		if isLeft {
-			return prefix + "|   "
-		}
-		return prefix + "    "
-	}(), n.Left, true)
-	nodePrint(func() string {
-		if isLeft {
-			return prefix + "|   "
-		}
-		return prefix + "    "
-	}(), n.Right, false)
-	return prefix
 }
 
 type BinaryTree[T any] struct {
@@ -70,7 +49,9 @@ type BinaryTree[T any] struct {
 }
 
 func (b *BinaryTree[T]) String() string {
-	return nodePrint("", b.Root, false)
+	var sb strings.Builder
+	nodePrint("", b.Root, false, &sb)
+	return sb.String()
 }
 
 func (b *BinaryTree[T]) IsEmpty() bool {
