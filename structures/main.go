@@ -63,6 +63,13 @@ func main() {
 	tr.Insert(56, func(a, b int) bool {
 		return a < b
 	})
+
+	tr.Delete(tr.Find(167, func(a, b int) bool {
+		return a == b
+	}, func(a, b int) bool {
+		return a < b
+	}))
+
 	fmt.Print(tr.String())
 
 	//for x := range tr.Iter() {

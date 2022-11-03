@@ -12,6 +12,32 @@ type node[T any] struct {
 	Value  T
 }
 
+func minimum[T any](x *node[T]) *node[T] {
+	if x.Left == nil {
+		return x
+	}
+	return minimum(x.Left)
+}
+
+func maximum[T any](x *node[T]) *node[T] {
+	if x.Right == nil {
+		return x
+	}
+	return maximum(x.Right)
+}
+
+func next[T any](x *node[T]) *node[T] {
+	if x.Right != nil {
+		return minimum(x.Right)
+	}
+	y := x.Parent
+	for y != nil && x == y.Right {
+		x = y
+		y = y.Parent
+	}
+	return y
+}
+
 func NewNode[T any](elem T) *node[T] {
 	return &node[T]{
 		Value:  elem,
@@ -76,6 +102,22 @@ func (b *BinaryTree[T]) Iter() <-chan T {
 	return iter
 }
 
+func (b *BinaryTree[T]) Find(elem T, equal, less func(a, b T) bool) *node[T] {
+	if b.Root == nil {
+		return nil
+	}
+	current := b.Root
+	for current != nil && !equal(current.Value, elem) {
+		if less(elem, current.Value) {
+			current = current.Left
+		} else {
+			current = current.Right
+		}
+	}
+	return current
+
+}
+
 func (b *BinaryTree[T]) Insert(elem T, less func(a, b T) bool) {
 	if b.Root == nil {
 		b.Root = NewNode(elem)
@@ -96,6 +138,50 @@ func (b *BinaryTree[T]) Insert(elem T, less func(a, b T) bool) {
 			parent.Left = current
 		} else {
 			parent.Right = current
+		}
+	}
+}
+
+func (b *BinaryTree[T]) Delete(node *node[T]) {
+	if node == nil {
+		return
+	}
+	p := node.Parent
+	if node.Left == nil && node.Right == nil {
+		if p.Left == node {
+			p.Left = nil
+		} else {
+			p.Right = nil
+		}
+	} else if node.Left == nil || node.Right == nil {
+		if node.Left == nil {
+			if p.Left == node {
+				p.Left = node.Right
+			} else {
+				p.Right = node.Right
+			}
+			node.Right.Parent = p
+		} else {
+			if p.Left == node {
+				p.Left = node.Left
+			} else {
+				p.Right = node.Left
+			}
+			node.Left.Parent = p
+		}
+	} else {
+		s := next(node)
+		node.Value = s.Value
+		if s.Parent.Left == s {
+			s.Parent.Left = s.Right
+			if s.Right != nil {
+				s.Right.Parent = s.Parent
+			}
+		} else {
+			s.Parent.Right = s.Right
+			if s.Right != nil {
+				s.Right.Parent = s.Parent
+			}
 		}
 	}
 }
