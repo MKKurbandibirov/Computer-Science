@@ -1,14 +1,15 @@
-package buble_sort
+package shacker_sort
 
 import (
 	"reflect"
 	"testing"
 )
 
-func TestBubbleSort(t *testing.T) {
+func TestShackerSort(t *testing.T) {
 	type args struct {
 		array []int
 		less  func(a, b int) bool
+		more  func(a, b int) bool
 	}
 	tests := []struct {
 		name string
@@ -22,6 +23,9 @@ func TestBubbleSort(t *testing.T) {
 				less: func(a, b int) bool {
 					return a < b
 				},
+				more: func(a, b int) bool {
+					return a > b
+				},
 			},
 			want: []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
 		},
@@ -31,6 +35,9 @@ func TestBubbleSort(t *testing.T) {
 				array: []int{-3, 89, -67, 88, 4, 56, 1, 0, 14, 35},
 				less: func(a, b int) bool {
 					return a < b
+				},
+				more: func(a, b int) bool {
+					return a > b
 				},
 			},
 			want: []int{-67, -3, 0, 1, 4, 14, 35, 56, 88, 89},
@@ -47,6 +54,9 @@ func TestBubbleSort(t *testing.T) {
 				less: func(a, b int) bool {
 					return a < b
 				},
+				more: func(a, b int) bool {
+					return a > b
+				},
 			},
 			want: []int{-964, -910, -907, -894, -866, -861, -859, -855, -843, -810, -799, -798, -795, -787, -763, -762,
 				-752, -703, -688, -665, -664, -628, -621, -565, -531, -525, -500, -493, -476, -460, -386, -361, -343,
@@ -58,11 +68,11 @@ func TestBubbleSort(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			BubbleSort(tt.args.array, tt.args.less)
+			ShakerSort(tt.args.array, tt.args.less, tt.args.more)
 		})
 		got := tt.args.array
 		if !reflect.DeepEqual(got, tt.want) {
-			t.Errorf("BubbleSort() got = %v, want %v", got, tt.want)
+			t.Errorf("ShakerSort() got = %v, want %v", got, tt.want)
 		}
 	}
 }
