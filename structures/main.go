@@ -1,10 +1,5 @@
 package main
 
-import (
-	"data-structures/binary_tree"
-	"fmt"
-)
-
 //func removeElements(list *list.List[int], val int) *list.List[int] {
 //	head := list.First
 //	for head.Value == val && head != nil {
@@ -29,42 +24,6 @@ import (
 //}
 
 func main() {
-	tr := new(binary_tree.BinaryTree[int])
-	tr.Insert(23, func(a, b int) bool {
-		return a < b
-	})
-	tr.Insert(14, func(a, b int) bool {
-		return a < b
-	})
-	tr.Insert(45, func(a, b int) bool {
-		return a < b
-	})
-	tr.Insert(12, func(a, b int) bool {
-		return a < b
-	})
-	tr.Insert(16, func(a, b int) bool {
-		return a < b
-	})
-
-	tr.Insert(34, func(a, b int) bool {
-		return a < b
-	})
-	tr.Insert(35, func(a, b int) bool {
-		return a < b
-	})
-	tr.Insert(33, func(a, b int) bool {
-		return a < b
-	})
-	tr.Insert(56, func(a, b int) bool {
-		return a < b
-	})
-
-	fmt.Print(tr.String())
-
-	tr.Delete(tr.Root.Left.Right)
-
-	fmt.Print(tr.String())
-
 	//for x := range tr.Iter() {
 	//	fmt.Printf("%v ", x)
 	//}
