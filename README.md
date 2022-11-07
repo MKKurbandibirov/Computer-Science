@@ -1,4 +1,4 @@
-# Computer-Science
+# Data-Structures and Algorithms
 Standard Algorithms an Data-Structures on GoLang
 
 ### The data structures in the series
