@@ -5,9 +5,9 @@ Standard Algorithms an Data-Structures on GoLang
 
 - [x] Array
 - [x] Stack
-- [x] Queue
-- [x] Doubly Linked List
-- [x] Binary Search Tree
+- [x] Dequeue
+- [x] Linked List
+- [x] Binary Tree
 
 ### The sorting algorithms in the series
 
