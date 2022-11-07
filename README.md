@@ -1,5 +1,5 @@
 # Data-Structures and Algorithms
-Standard Algorithms an Data-Structures on GoLang
+Standard Algorithms and Data-Structures on GoLang
 
 ### The data structures in the series
 
