@@ -19,5 +19,3 @@ Standard Algorithms an Data-Structures on GoLang
 - [x] Insertion sort
 - [x] Shellsort
 - [x] TreeSort
-
-### A good way to compare all of them
