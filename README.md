@@ -1,5 +1,5 @@
 # Data-Structures and Algorithms
-Standard Algorithms and Data-Structures on GoLang
+Standard Algorithms and Data-Structures in Golang
 
 ### The data structures in the series
 
@@ -8,6 +8,7 @@ Standard Algorithms and Data-Structures on GoLang
 - [x] Dequeue
 - [x] Linked List
 - [x] Binary Tree
+- [x] Heap
 
 ### The sorting algorithms in the series
 
