@@ -20,3 +20,4 @@ Standard Algorithms and Data-Structures in Golang
 - [x] Insertion sort
 - [x] Shellsort
 - [x] TreeSort
+- [x] HeapSort
