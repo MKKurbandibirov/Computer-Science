@@ -82,6 +82,7 @@ func (h *Heap[T]) IsEmpty() bool {
 
 func (h *Heap[T]) Add(elem T) {
 	h.arr = append(h.arr, elem)
+	h.size++
 	i := h.Size() - 1
 	parent := (i - 1) / 2
 	comp := h.less
@@ -93,11 +94,11 @@ func (h *Heap[T]) Add(elem T) {
 		i = parent
 		parent = (i - 1) / 2
 	}
-	h.size++
 }
 
 func (h *Heap[T]) Build(elems []T) {
 	h.arr = elems
+	h.size = len(elems)
 	for i := h.Size() / 2; i >= 0; i-- {
 		h.Heapify(i)
 	}
