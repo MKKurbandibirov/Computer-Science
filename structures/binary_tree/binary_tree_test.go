@@ -12,28 +12,26 @@ type person struct {
 
 var testTreeInt BinaryTree[int]
 var testTreeString BinaryTree[string]
-var testTreeCustom BinaryTree[person]
-var testTreeCustom2 BinaryTree[person]
 
 func TestBinaryTree_Find(t *testing.T) {
 	testTreeInt.Root = new(node[int])
-	testTreeInt.Root.Value = int(10)
+	testTreeInt.Root.Value = 10
 	testTreeInt.Root.Left = new(node[int])
-	testTreeInt.Root.Left.Value = int(7)
+	testTreeInt.Root.Left.Value = 7
 	testTreeInt.Root.Right = new(node[int])
-	testTreeInt.Root.Right.Value = int(13)
+	testTreeInt.Root.Right.Value = 13
 	testTreeInt.Root.Left.Left = new(node[int])
-	testTreeInt.Root.Left.Left.Value = int(4)
+	testTreeInt.Root.Left.Left.Value = 4
 	testTreeInt.Root.Left.Right = new(node[int])
-	testTreeInt.Root.Left.Right.Value = int(9)
+	testTreeInt.Root.Left.Right.Value = 9
 
 	type fields struct {
-		Root *node[int]
-	}
-	type args struct {
-		elem  int
+		Root  *node[int]
 		equal func(a, b int) bool
 		less  func(a, b int) bool
+	}
+	type args struct {
+		elem int
 	}
 	tests := []struct {
 		name   string
@@ -45,15 +43,15 @@ func TestBinaryTree_Find(t *testing.T) {
 			name: "Case 1: Find existing element",
 			fields: fields{
 				Root: testTreeInt.Root,
-			},
-			args: args{
-				elem: 9,
 				equal: func(a, b int) bool {
 					return a == b
 				},
 				less: func(a, b int) bool {
 					return a < b
 				},
+			},
+			args: args{
+				elem: 9,
 			},
 			want: testTreeInt.Root.Left.Right,
 		},
@@ -61,15 +59,15 @@ func TestBinaryTree_Find(t *testing.T) {
 			name: "Case 2: Find not existing element",
 			fields: fields{
 				Root: testTreeInt.Root,
-			},
-			args: args{
-				elem: 346,
 				equal: func(a, b int) bool {
 					return a == b
 				},
 				less: func(a, b int) bool {
 					return a < b
 				},
+			},
+			args: args{
+				elem: 346,
 			},
 			want: nil,
 		},
@@ -77,9 +75,6 @@ func TestBinaryTree_Find(t *testing.T) {
 			name: "Case 3: Find in nil root",
 			fields: fields{
 				Root: nil,
-			},
-			args: args{
-				elem: 346,
 				equal: func(a, b int) bool {
 					return a == b
 				},
@@ -87,15 +82,20 @@ func TestBinaryTree_Find(t *testing.T) {
 					return a < b
 				},
 			},
+			args: args{
+				elem: 346,
+			},
 			want: nil,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			b := &BinaryTree[int]{
-				Root: tt.fields.Root,
+				Root:  tt.fields.Root,
+				less:  tt.fields.less,
+				equal: tt.fields.equal,
 			}
-			if got := b.Find(tt.args.elem, tt.args.equal, tt.args.less); !reflect.DeepEqual(got, tt.want) {
+			if got := b.Find(tt.args.elem); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Find() = %v, want %v", got, tt.want)
 			}
 		})
@@ -104,24 +104,25 @@ func TestBinaryTree_Find(t *testing.T) {
 
 func TestBinaryTree_Insert(t *testing.T) {
 	testTreeString.Root = new(node[string])
-	testTreeString.Root.Value = string("H")
+	testTreeString.Root.Value = "H"
 	testTreeString.Root.Left = new(node[string])
-	testTreeString.Root.Left.Value = string("C")
+	testTreeString.Root.Left.Value = "C"
 	testTreeString.Root.Right = new(node[string])
-	testTreeString.Root.Right.Value = string("W")
+	testTreeString.Root.Right.Value = "W"
 	testTreeString.Root.Left.Left = new(node[string])
-	testTreeString.Root.Left.Left.Value = string("B")
+	testTreeString.Root.Left.Left.Value = "B"
 	testTreeString.Root.Left.Right = new(node[string])
-	testTreeString.Root.Left.Right.Value = string("D")
+	testTreeString.Root.Left.Right.Value = "D"
 
 	var tmp BinaryTree[string]
 
 	type fields struct {
-		Root *node[string]
+		Root  *node[string]
+		equal func(a, b string) bool
+		less  func(a, b string) bool
 	}
 	type args struct {
 		elem string
-		less func(a, b string) bool
 	}
 	tests := []struct {
 		name   string
@@ -133,12 +134,15 @@ func TestBinaryTree_Insert(t *testing.T) {
 			name: "Case 1: Insert in empty tree",
 			fields: fields{
 				Root: tmp.Root,
-			},
-			args: args{
-				elem: "S",
+				equal: func(a, b string) bool {
+					return a == b
+				},
 				less: func(a, b string) bool {
 					return a < b
 				},
+			},
+			args: args{
+				elem: "S",
 			},
 			want: "S",
 		},
@@ -146,12 +150,15 @@ func TestBinaryTree_Insert(t *testing.T) {
 			name: "Case 2: Insert in full tree",
 			fields: fields{
 				Root: testTreeString.Root,
-			},
-			args: args{
-				elem: "E",
+				equal: func(a, b string) bool {
+					return a == b
+				},
 				less: func(a, b string) bool {
 					return a < b
 				},
+			},
+			args: args{
+				elem: "E",
 			},
 			want: "E",
 		},
@@ -159,12 +166,15 @@ func TestBinaryTree_Insert(t *testing.T) {
 			name: "Case 3: Insert in full tree",
 			fields: fields{
 				Root: testTreeString.Root,
-			},
-			args: args{
-				elem: "A",
+				equal: func(a, b string) bool {
+					return a == b
+				},
 				less: func(a, b string) bool {
 					return a < b
 				},
+			},
+			args: args{
+				elem: "A",
 			},
 			want: "A",
 		},
@@ -172,77 +182,15 @@ func TestBinaryTree_Insert(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			b := &BinaryTree[string]{
-				Root: tt.fields.Root,
+				Root:  tt.fields.Root,
+				equal: tt.fields.equal,
+				less:  tt.fields.less,
 			}
-			b.Insert(tt.args.elem, tt.args.less)
-			got := b.Find(tt.args.elem, func(a, b string) bool {
-				return a == b
-			}, func(a, b string) bool {
-				return a < b
-			}).Value
+			b.Insert(tt.args.elem)
+			got := b.Find(tt.args.elem).Value
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Insert() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
 }
-
-//func TestBinaryTree_Delete(t *testing.T) {
-//
-//	testTreeCustom.Root = new(node[person])
-//	testTreeCustom.Root.Value = person{6, "Jack"}
-//	testTreeCustom.Root.Left = new(node[person])
-//	testTreeCustom.Root.Left.Value = person{2, "Simon"}
-//	testTreeCustom.Root.Right = new(node[person])
-//	testTreeCustom.Root.Right.Value = person{15, "Alice"}
-//	testTreeCustom.Root.Left.Left = new(node[person])
-//	testTreeCustom.Root.Left.Left.Value = person{1, "John"}
-//	testTreeCustom.Root.Left.Right = new(node[person])
-//	testTreeCustom.Root.Left.Right.Value = person{4, "Patric"}
-//
-//	type fields struct {
-//		Root *node[person]
-//	}
-//	type args struct {
-//		node *node[person]
-//	}
-//	tests := []struct {
-//		name   string
-//		fields fields
-//		args   args
-//		want   *node[person]
-//	}{
-//		{
-//			name: "Case 1: Delete not existing node",
-//			fields: fields{
-//				Root: testTreeCustom.Root,
-//			},
-//			args: args{
-//				node: nil,
-//			},
-//			want: nil,
-//		},
-//		{
-//			name: "Case 2: Delete existing node",
-//			fields: fields{
-//				Root: testTreeCustom.Root,
-//			},
-//			args: args{
-//				node: testTreeCustom.Root.Left.Right,
-//			},
-//			want: nil,
-//		},
-//	}
-//	for _, tt := range tests {
-//		t.Run(tt.name, func(t *testing.T) {
-//			b := &BinaryTree[person]{
-//				Root: tt.fields.Root,
-//			}
-//			b.Delete(tt.args.node)
-//			got := tt.args.node
-//			if !reflect.DeepEqual(got, tt.want) {
-//				t.Errorf("Delete() got = %v, want %v", got, tt.want)
-//			}
-//		})
-//	}
-//}

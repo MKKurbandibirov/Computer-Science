@@ -97,13 +97,10 @@ func (l *List[T]) Insert(ind int, elem T) error {
 	if ind > l.Size() || ind < 0 {
 		return errors.New("index is out of bound")
 	}
-	if l.Size() == 0 && ind == 0 {
-		Node := new(node[T])
-		Node.Value = elem
-		Node.Prev = nil
-		Node.Next = nil
-		l.First = Node
-		l.Last = Node
+	if ind == 0 {
+		l.AddFront(elem)
+	} else if ind == l.Size() {
+		l.AddBack(elem)
 	} else {
 		Node := new(node[T])
 		Node.Value = elem
@@ -116,8 +113,8 @@ func (l *List[T]) Insert(ind int, elem T) error {
 		Node.Prev = prev
 		curr.Prev = Node
 		Node.Next = curr
+		l.length++
 	}
-	l.length++
 	return nil
 }
 

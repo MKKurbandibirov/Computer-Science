@@ -38,6 +38,18 @@ func next[T any](x *node[T]) *node[T] {
 	return y
 }
 
+func prev[T any](x *node[T]) *node[T] {
+	if x.Left != nil {
+		return minimum(x.Left)
+	}
+	y := x.Parent
+	for y != nil && x == y.Left {
+		x = y
+		y = y.Parent
+	}
+	return y
+}
+
 func NewNode[T any](elem T) *node[T] {
 	return &node[T]{
 		Value:  elem,
@@ -60,18 +72,28 @@ func nodePrint[T any](prefix string, n *node[T], isLeft bool, sb *strings.Builde
 				return "|   "
 			}
 			return "    "
-		}(), n.Left, true, sb)
+		}(), n.Right, true, sb)
 		nodePrint(prefix+func() string {
 			if isLeft {
 				return "|   "
 			}
 			return "    "
-		}(), n.Right, false, sb)
+		}(), n.Left, false, sb)
 	}
 }
 
 type BinaryTree[T any] struct {
-	Root *node[T]
+	Root  *node[T]
+	less  func(x, y T) bool
+	equal func(x, y T) bool
+}
+
+func NewBinaryTree[T any](less, equal func(x, y T) bool) *BinaryTree[T] {
+	return &BinaryTree[T]{
+		Root:  nil,
+		less:  less,
+		equal: equal,
+	}
 }
 
 func (b *BinaryTree[T]) String() string {
@@ -102,13 +124,13 @@ func (b *BinaryTree[T]) Iter() <-chan T {
 	return iter
 }
 
-func (b *BinaryTree[T]) Find(elem T, equal, less func(a, b T) bool) *node[T] {
+func (b *BinaryTree[T]) Find(elem T) *node[T] {
 	if b.Root == nil {
 		return nil
 	}
 	current := b.Root
-	for current != nil && !equal(current.Value, elem) {
-		if less(elem, current.Value) {
+	for current != nil && !b.equal(current.Value, elem) {
+		if b.less(elem, current.Value) {
 			current = current.Left
 		} else {
 			current = current.Right
@@ -118,7 +140,7 @@ func (b *BinaryTree[T]) Find(elem T, equal, less func(a, b T) bool) *node[T] {
 
 }
 
-func (b *BinaryTree[T]) Insert(elem T, less func(a, b T) bool) {
+func (b *BinaryTree[T]) Insert(elem T) {
 	if b.Root == nil {
 		b.Root = NewNode(elem)
 	} else {
@@ -126,7 +148,7 @@ func (b *BinaryTree[T]) Insert(elem T, less func(a, b T) bool) {
 		parent := current
 		for current != nil {
 			parent = current
-			if less(elem, current.Value) {
+			if b.less(elem, current.Value) {
 				current = current.Left
 			} else {
 				current = current.Right
@@ -134,7 +156,7 @@ func (b *BinaryTree[T]) Insert(elem T, less func(a, b T) bool) {
 		}
 		current = NewNode(elem)
 		current.Parent = parent
-		if less(current.Value, parent.Value) {
+		if b.less(current.Value, parent.Value) {
 			parent.Left = current
 		} else {
 			parent.Right = current
