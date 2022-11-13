@@ -23,3 +23,7 @@ Standard Algorithms and Data-Structures in Golang
 - [x] HeapSort
 - [x] QuickSort
 - [x] MergeSort
+
+### The searching algorithms in the series
+
+- [x] BinarySearch
