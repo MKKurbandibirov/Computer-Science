@@ -21,3 +21,5 @@ Standard Algorithms and Data-Structures in Golang
 - [x] Shellsort
 - [x] TreeSort
 - [x] HeapSort
+- [x] QuickSort
+- [x] MergeSort
