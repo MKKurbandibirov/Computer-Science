@@ -1,11 +1,11 @@
-package quick_sort
+package merge_sort
 
 import (
 	"reflect"
 	"testing"
 )
 
-func TestQuickSort(t *testing.T) {
+func TestMergeSort(t *testing.T) {
 	type args struct {
 		array []int
 		less  func(a, b int) bool
@@ -57,12 +57,12 @@ func TestQuickSort(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
+		var got []int
 		t.Run(tt.name, func(t *testing.T) {
-			QuickSort(tt.args.array, tt.args.less)
+			got = MergeSort(tt.args.array, tt.args.less)
 		})
-		got := tt.args.array
 		if !reflect.DeepEqual(got, tt.want) {
-			t.Errorf("QuickSort() got = %v, want %v", got, tt.want)
+			t.Errorf("MergeSort() got = %v, want %v", got, tt.want)
 		}
 	}
 }

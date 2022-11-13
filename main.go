@@ -1,54 +1,54 @@
 package main
 
 import (
-	"algos-and-structures/structures/heap"
+	"algos-and-structures/algorithms/sorting/merge_sort"
 	"fmt"
 )
 
 func main() {
-	{
-		hMax := heap.NewHeap[int](func(a, b int) bool {
-			return a < b
-		}, func(a, b int) bool {
-			return a > b
-		}, heap.MAX)
-
-		hMax.Add(23)
-		hMax.Add(45)
-		hMax.Add(67)
-		hMax.Add(98)
-		hMax.Add(2)
-		hMax.Add(13)
-
-		fmt.Println(hMax)
-
-		hMin := heap.NewHeap[int](func(a, b int) bool {
-			return a < b
-		}, func(a, b int) bool {
-			return a > b
-		}, heap.MIN)
-
-		hMin.Add(23)
-		hMin.Add(45)
-		hMin.Add(67)
-		hMin.Add(98)
-		hMin.Add(2)
-		hMin.Add(13)
-
-		fmt.Println(hMin)
-
-		for x := range hMin.Iter() {
-			fmt.Println(x)
-		}
-
-		fmt.Println(hMin)
-
-		for x := range hMin.Iter() {
-			fmt.Println(x)
-		}
-
-		fmt.Println(hMin)
-	}
+	//{
+	//	hMax := heap.NewHeap[int](func(a, b int) bool {
+	//		return a < b
+	//	}, func(a, b int) bool {
+	//		return a > b
+	//	}, heap.MAX)
+	//
+	//	hMax.Add(23)
+	//	hMax.Add(45)
+	//	hMax.Add(67)
+	//	hMax.Add(98)
+	//	hMax.Add(2)
+	//	hMax.Add(13)
+	//
+	//	fmt.Println(hMax)
+	//
+	//	hMin := heap.NewHeap[int](func(a, b int) bool {
+	//		return a < b
+	//	}, func(a, b int) bool {
+	//		return a > b
+	//	}, heap.MIN)
+	//
+	//	hMin.Add(23)
+	//	hMin.Add(45)
+	//	hMin.Add(67)
+	//	hMin.Add(98)
+	//	hMin.Add(2)
+	//	hMin.Add(13)
+	//
+	//	fmt.Println(hMin)
+	//
+	//	for x := range hMin.Iter() {
+	//		fmt.Println(x)
+	//	}
+	//
+	//	fmt.Println(hMin)
+	//
+	//	for x := range hMin.Iter() {
+	//		fmt.Println(x)
+	//	}
+	//
+	//	fmt.Println(hMin)
+	//}
 
 	//{
 	//	b := binary_tree.NewBinaryTree[int](func(a, b int) bool {
@@ -65,4 +65,12 @@ func main() {
 	//	b.Insert(35)
 	//	fmt.Println(b)
 	//}
+	{
+		arr := []int{-3, 89, -67, 88, 4, 56, 1, 0, 14, 35}
+		arr = merge_sort.MergeSort[int](arr, func(a, b int) bool {
+			return a < b
+		})
+		fmt.Println(arr)
+	}
+
 }
