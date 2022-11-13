@@ -1,10 +1,5 @@
 package main
 
-import (
-	"algos-and-structures/algorithms/sorting/merge_sort"
-	"fmt"
-)
-
 func main() {
 	//{
 	//	hMax := heap.NewHeap[int](func(a, b int) bool {
@@ -65,12 +60,5 @@ func main() {
 	//	b.Insert(35)
 	//	fmt.Println(b)
 	//}
-	{
-		arr := []int{-3, 89, -67, 88, 4, 56, 1, 0, 14, 35}
-		arr = merge_sort.MergeSort[int](arr, func(a, b int) bool {
-			return a < b
-		})
-		fmt.Println(arr)
-	}
 
 }
