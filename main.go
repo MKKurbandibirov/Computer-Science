@@ -67,35 +67,24 @@ func main() {
 	//}
 
 	{
-		g := graph.NewGraph[int](func(a, b int) bool {
+		g := graph.NewGraph[int](1, func(a, b int) bool {
 			return a == b
 		})
-		g.Start = graph.NewGraphNode(101)
-		n1 := graph.NewGraphNode(102)
-		n2 := graph.NewGraphNode(103)
-		n3 := graph.NewGraphNode(104)
-		n4 := graph.NewGraphNode(105)
-		n5 := graph.NewGraphNode(106)
-		n6 := graph.NewGraphNode(108)
 
-		g.Start.Edges = append(g.Start.Edges, n1)
-		g.Start.Edges = append(g.Start.Edges, n2)
+		g.Add(1, 2)
+		g.Add(1, 3)
+		g.Add(2, 4)
+		g.Add(2, 5)
+		g.Add(1, 4)
+		g.Add(3, 4)
+		g.Add(3, 2)
 
-		n1.Edges = append(n1.Edges, n4)
-		n1.Edges = append(n1.Edges, n5)
+		fmt.Println(g.Find(1))
+		fmt.Println(g.Find(2))
 
-		n2.Edges = append(n2.Edges, n1)
-		n2.Edges = append(n2.Edges, g.Start)
+		g.Remove(4)
 
-		n5.Edges = append(n5.Edges, n3)
-
-		node := g.BFS(101)
-		fmt.Println(node)
-
-		g.Add(node, n6)
-
-		node = g.BFS(101)
-		fmt.Println(node)
+		fmt.Println(g.Find(3))
 	}
 
 }
