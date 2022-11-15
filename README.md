@@ -9,6 +9,7 @@ Standard Algorithms and Data-Structures in Golang
 - [x] Linked List
 - [x] Binary Tree
 - [x] Heap
+- [x] Graph
 
 ### The sorting algorithms in the series
 
@@ -27,3 +28,4 @@ Standard Algorithms and Data-Structures in Golang
 ### The searching algorithms in the series
 
 - [x] BinarySearch
+- [x] Breadth-FirstSearch
