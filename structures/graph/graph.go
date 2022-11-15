@@ -1,6 +1,8 @@
 package graph
 
-import "algos-and-structures/structures/dequeue"
+import (
+	"algos-and-structures/structures/dequeue"
+)
 
 type GraphNode[T any] struct {
 	Value T
@@ -19,9 +21,9 @@ type Graph[T any] struct {
 	equal func(a, b T) bool
 }
 
-func NewGraph[T any](equal func(a, b T) bool) *Graph[T] {
+func NewGraph[T any](start T, equal func(a, b T) bool) *Graph[T] {
 	return &Graph[T]{
-		Start: nil,
+		Start: NewGraphNode(start),
 		equal: equal,
 	}
 }
@@ -35,7 +37,7 @@ func (g *Graph[T]) contains(arr []T, val T) bool {
 	return false
 }
 
-func (g *Graph[T]) BFS(val T) *GraphNode[T] {
+func (g *Graph[T]) Find(val T) *GraphNode[T] {
 	visited := make([]T, 0)
 	deq := new(dequeue.Dequeue[*GraphNode[T]])
 	deq.AddBack(g.Start)
@@ -60,7 +62,17 @@ func (g *Graph[T]) BFS(val T) *GraphNode[T] {
 	return nil
 }
 
-func (g *Graph[T]) Add(dst, new *GraphNode[T]) {
-	node := g.BFS(dst.Value)
-	node.Edges = append(node.Edges, new)
+func (g *Graph[T]) Add(dst, new T) {
+	node := g.Find(dst)
+	tmp := NewGraphNode(new)
+	node.Edges = append(node.Edges, tmp)
 }
+
+//func (g *Graph[T]) Remove(val T) {
+//	node := g.Find(val)
+//	for i := 0; i < len(node.Edges); i++ {
+//		if g.equal(node.Value, val) {
+//			node.Edges = append(node.Edges[:i], node.Edges[i+1:]...)
+//		}
+//	}
+//}
